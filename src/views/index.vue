@@ -1,14 +1,27 @@
 <template>
-<div>
-  <loading ref="loading"></loading>
+<div v-loading="loading">
+
 </div>
 
 </template>
 
 <script>
-    export default {
-        name: "index"
+  import { ref, onMounted } from 'vue';
+  export default {
+    name: 'index',
+    setup () {
+      const loading = ref(true);
+
+      onMounted(() => {
+        setTimeout(() => {
+          loading.value = false;
+          console.log('111');
+        }, 1000)
+      })
+
+      return { loading }
     }
+  }
 </script>
 
 <style scoped>
