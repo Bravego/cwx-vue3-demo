@@ -1,22 +1,37 @@
 <template>
-<div class="loading">
-  <img src="@/assets/loading.png">
+<div class="loading" v-show="isShow">
+  <img :src="src">
   <p class="title">{{ title }}</p>
 </div>
-<div class="mask"></div>
+<div class="mask" v-show="isShow"></div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { toRefs, reactive } from 'vue';
 
 export default {
   name: 'Loading',
   setup () {
-    const title = ref('加载中...');
-    const setTitle = val => {
-      title.value = val;
+    // const title = ref('');
+    // const src = '';
+    // const isShow = ref(false);
+    const options = reactive({
+      title: '',
+      src: '',
+      isShow: false,
+      show: ''
+    });
+    options.show = (val, imgSrc, duration) => {
+      options.title = val;
+      options.src = imgSrc;
+      options.isShow = true;
+      setTimeout(() => {
+        options.isShow = false;
+      }, duration)
     }
-    return { title, setTitle };
+
+
+    return { ...toRefs(options) };
 
   },
 }
@@ -43,5 +58,8 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,.5);
+}
+.myRelative {
+  position: relative;
 }
 </style>
